@@ -1,5 +1,5 @@
-export const brightness = (inputImageCtx, inputImageCanvas, brightnessValue) => {
- 
+export const gamma = (inputImageCtx, inputImageCanvas, gammaValue) => {
+
     // read the width and height of the canvas
     var width = canvas.width;
     var height = canvas.height;
@@ -8,19 +8,17 @@ export const brightness = (inputImageCtx, inputImageCanvas, brightnessValue) => 
     var LUT = new Array(255);
 
     for (var i=0; i<256; i++) {
-        var newValue = i + brightnessValue;
+        var newValue = Math.floor(255*Math.pow(i/255.0, 1/gammaValue));
 
         if (newValue > 255)
             LUT[i] = 255;
-        else if (newValue < 0)
-            LUT[i] = 0;
         else
             LUT[i] = newValue;
     }
-
-    // make brightness correction
+    
+    // make gamma correction
     var newImageData = ctx.createImageData(width, height);
-
+    
     for (var i=0; i<height; i++) {
         for (var j=0; j<width; j++) {
             index = (i*width+j)*4;
