@@ -1,0 +1,25 @@
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    list-style-type: none;
+}
+
+.effect {
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: white;
+	color: #000;
+	border: none;
+	padding: 5px;
+	cursor: pointer;
+    box-shadow: inset 0px 0px 10px -4px rgba(0, 0, 0, 1);
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+.effect:hover {
+    transform: scale(1.1);
+}
