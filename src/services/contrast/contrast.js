@@ -1,5 +1,5 @@
-export const brightness = (inputImageCtx, inputImageCanvas, brightnessValue) => {
- 
+export const contrast = (inputImageCtx, inputImageCanvas, contrastValue) => {
+
     // read the width and height of the canvas
     var width = canvas.width;
     var height = canvas.height;
@@ -8,7 +8,7 @@ export const brightness = (inputImageCtx, inputImageCanvas, brightnessValue) => 
     var LUT = new Array(255);
 
     for (var i=0; i<256; i++) {
-        var newValue = i + brightnessValue;
+        var newValue = (contrastValue*(i-127)+127);
 
         if (newValue > 255)
             LUT[i] = 255;
@@ -17,14 +17,14 @@ export const brightness = (inputImageCtx, inputImageCanvas, brightnessValue) => 
         else
             LUT[i] = newValue;
     }
-
-    // make brightness correction
+    
+    // make contrast correction
     var newImageData = ctx.createImageData(width, height);
 
     for (var i=0; i<height; i++) {
         for (var j=0; j<width; j++) {
             index = (i*width+j)*4;
-            
+
             newImageData.data[index+3] = 255;
             newImageData.data[index+0] = LUT[imageData.data[index+0]];
             newImageData.data[index+1] = LUT[imageData.data[index+1]];
