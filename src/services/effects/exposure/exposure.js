@@ -1,33 +1,24 @@
-export const exposure = (inputImageCtx, inputImageCanvas, exposureValue) => {
-    
-    // read the width and height of the canvas
-    var width = canvas.width;
-    var height = canvas.height;
-    
-    // prepare LUT table
-    var LUT = new Array(255);
-        
-    for (var i=0; i<256; i++) {
-        var newValue = expositionValue*i;
+import {transparentToWhite} from "../../transparentToWhite";
 
-        if (newValue > 255)
-            LUT[i] = 255;
-        else
-            LUT[i] = newValue;
+const createLookUpArray = (value) => [...Array(256).keys()].map((_, index) => {
+    const val = value * index;
+    return val > 255 ? Math.min(val, 255) : val;
+});
+
+export const exposure = (inputImageCanvas, exposureValue) => {
+    const width = inputImageCanvas.width;
+    const height = inputImageCanvas.height;
+    const context = inputImageCanvas.getContext('2d');
+    const lookUpArray = createLookUpArray(exposureValue);
+    const imageData = transparentToWhite(context, width, height);
+    const resultImageData = context.createImageData(imageData);
+
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        resultImageData.data[i] = lookUpArray[imageData.data[i]];
+        resultImageData.data[i + 1] = lookUpArray[imageData.data[i + 1]];
+        resultImageData.data[i + 2] = lookUpArray[imageData.data[i + 2]];
+        resultImageData.data[i + 3] = 255;
     }
-    
-    // make exposition correction
-    var newImageData = ctx.createImageData(width, height);
-    for (var i=0; i<height; i++) {
-        for (var j=0; j<width; j++) {
-            index = (i*width+j)*4;
-            
-            newImageData.data[index+3] = 255;
-            newImageData.data[index+0] = LUT[imageData.data[index+0]];
-            newImageData.data[index+1] = LUT[imageData.data[index+1]];
-            newImageData.data[index+2] = LUT[imageData.data[index+2]];
-        }
-    }
-    
-    return newImageData;
+
+    return resultImageData;
 }

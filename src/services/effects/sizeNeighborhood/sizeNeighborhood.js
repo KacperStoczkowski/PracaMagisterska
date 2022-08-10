@@ -1,27 +1,23 @@
-export const sizeNeighborhood = (inputImageCtx, inputImageCanvas, sizeValue) => {
-    
-    // set new size
-    canvas.width = width * scaleX / 100.0;
-    canvas.height = height * scaleY / 100.0;
-    
-    // perform neirest neighbour algorithm
-    var ratiox = (width*1.0)/(canvas.width*1.0);
-    var ratioy = (height*1.0)/(canvas.height*1.0);
+export const sizeNeighborhood = (inputImageCanvas, scaleX, scaleY, width, height) => {
+    const scaledWidth = width * scaleX / 100;
+    const scaledHeight = height * scaleY / 100;
+    const context = inputImageCanvas.getContext('2d');
+    const ratioX = (width * 1) / (scaledWidth);
+    const ratioY = (height * 1) / (scaledHeight);
+    const resultImageData = context.createImageData(scaledWidth, scaledHeight);
+    const sourceImage = context.getImageData(0 ,0, width, height);
 
-    var newImageData = ctx.createImageData(canvas.width, canvas.height);
-
-    for (var i=0; i<canvas.height; i++) {
-        for (var j=0; j<canvas.width; j++) {
-            var indexSrc = (Math.floor(i*ratioy)*width+Math.floor(j*ratiox))*4;
-            var indexDst = (i*canvas.width+j)*4;
-            
-            newImageData.data[indexDst+0] = imageData.data[indexSrc+0];
-            newImageData.data[indexDst+1] = imageData.data[indexSrc+1];
-            newImageData.data[indexDst+2] = imageData.data[indexSrc+2];
-            newImageData.data[indexDst+3] = imageData.data[indexSrc+3];
+    for (let i = 0; i < scaledHeight; i++) {
+        for (let j = 0; j < scaledWidth; j++) {
+            const indexSrc = (Math.floor(i * ratioY) * width + Math.floor(j * ratioX)) * 4;
+            const indexDst = (i * scaledWidth + j) * 4;
+            resultImageData.data[indexDst] = sourceImage.data[indexSrc];
+            resultImageData.data[indexDst+1] = sourceImage.data[indexSrc + 1];
+            resultImageData.data[indexDst+2] = sourceImage.data[indexSrc + 2];
+            resultImageData.data[indexDst+3] = sourceImage.data[indexSrc + 3];
         }
     }
 
-    return newImageData;
+    return resultImageData;
 }
  

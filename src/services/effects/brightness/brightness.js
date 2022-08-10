@@ -1,15 +1,9 @@
 import { transparentToWhite } from "../../transparentToWhite";
+import {getValueForLookUpArray} from "../../getValueForLookUpArray";
 
 const createLookUpArray = (value) => [...Array(256).keys()].map((_, index) => {
     const val = index + value;
-
-    if (val > 255) {
-        return Math.min(val, 255);
-    } else if (val < 0) {
-        return Math.max(val, 0);
-    } else {
-        return val;
-    }
+    return getValueForLookUpArray(val);
 });
 
 export const brightness = (inputImageCanvas, brightnessValue) => {

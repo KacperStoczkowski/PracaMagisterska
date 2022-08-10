@@ -57,7 +57,7 @@ export const Worksheet = () => {
 
             <div className="worksheet">
                 <canvas id="inputImageCanvas" className="inputImage" ref={inputImageCanvasRef} />
-                <button className="actionButton" onClick={handlePerformAction}>-></button>
+                <button className="actionButton" onClick={handlePerformAction}>Wykonaj</button>
                 <canvas id="outputImageCanvas" className="outputImage" ref={outputImageCanvasRef}/>
             </div>
 

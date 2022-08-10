@@ -1,34 +1,24 @@
-export const gamma = (inputImageCtx, inputImageCanvas, gammaValue) => {
+import {transparentToWhite} from "../../transparentToWhite";
 
-    // read the width and height of the canvas
-    var width = canvas.width;
-    var height = canvas.height;
-    
-    // prepare LUT table
-    var LUT = new Array(255);
+const createLookUpArray = (value) => [...Array(256).keys()].map((_, index) => {
+    const val = Math.floor(255 * Math.pow(index / 255, 1 / value));
+    return val > 255 ? Math.min(val, 255) : val;
+});
 
-    for (var i=0; i<256; i++) {
-        var newValue = Math.floor(255*Math.pow(i/255.0, 1/gammaValue));
+export const gamma = (inputImageCanvas, gammaValue) => {
+    const width = inputImageCanvas.width;
+    const height = inputImageCanvas.height;
+    const context = inputImageCanvas.getContext('2d');
+    const lookUpArray = createLookUpArray(gammaValue);
+    const imageData = transparentToWhite(context, width, height);
+    const resultImageData = context.createImageData(imageData);
 
-        if (newValue > 255)
-            LUT[i] = 255;
-        else
-            LUT[i] = newValue;
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        resultImageData.data[i] = lookUpArray[imageData.data[i]];
+        resultImageData.data[i + 1] = lookUpArray[imageData.data[i + 1]];
+        resultImageData.data[i + 2] = lookUpArray[imageData.data[i + 2]];
+        resultImageData.data[i + 3] = 255;
     }
-    
-    // make gamma correction
-    var newImageData = ctx.createImageData(width, height);
-    
-    for (var i=0; i<height; i++) {
-        for (var j=0; j<width; j++) {
-            index = (i*width+j)*4;
-            
-            newImageData.data[index+3] = 255;
-            newImageData.data[index+0] = LUT[imageData.data[index+0]];
-            newImageData.data[index+1] = LUT[imageData.data[index+1]];
-            newImageData.data[index+2] = LUT[imageData.data[index+2]];
-        }
-    }
-    
-    return newImageData;
+
+    return resultImageData;
 }

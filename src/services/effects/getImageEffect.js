@@ -9,33 +9,33 @@ import {
     sizeNeighborhood as sizeNeighborhoodType
 } from "../../constants/effects";
 
-import {brightness} from "./brightness/brightness";
-// import {contrast} from "./contrast/contrast";
-// import {exposure} from "./exposure/exposure";
-// import {gamma} from "./gamma/gamma";
-import {negative} from "./negative/negative";
-// import {sepia} from "./sepia/sepia";
+import { brightness } from "./brightness/brightness";
+import { contrast } from "./contrast/contrast";
+import { exposure } from "./exposure/exposure";
+import { gamma } from "./gamma/gamma";
+import { negative } from "./negative/negative";
+import { sepia } from "./sepia/sepia";
 // import {sizeInterpolation} from "./sizeInterpolation/sizeInterpolation";
-// import {sizeNeighborhood} from "./sizeNeighborhood/sizeNeighborhood";
+import { sizeNeighborhood } from "./sizeNeighborhood/sizeNeighborhood";
 
 export const getImageEffect = (type) => {
     switch (type) {
         case brightnessType:
             return brightness;
-        // case contrastType:
-        //     return contrast;
-        // case exposureType:
-        //     return exposure;
-        // case gammaType:
-        //     return gamma;
+        case contrastType:
+            return contrast;
+        case exposureType:
+            return exposure;
+        case gammaType:
+            return gamma;
         case negativeType:
             return negative;
-        // case sepiaType:
-        //     return sepia;
+        case sepiaType:
+            return sepia;
         // case sizeInterpolationType:
         //     return sizeInterpolation;
-        // case sizeNeighborhoodType:
-        //     return sizeNeighborhood;
+        case sizeNeighborhoodType:
+            return sizeNeighborhood;
         default:
             return null;
     }
