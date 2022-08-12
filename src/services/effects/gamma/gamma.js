@@ -20,5 +20,5 @@ export const gamma = (inputImageCanvas, gammaValue) => {
         resultImageData.data[i + 3] = 255;
     }
 
-    return resultImageData;
+    return {resultImageData, width, height};
 }

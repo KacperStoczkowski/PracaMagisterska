@@ -34,10 +34,10 @@ export const effects = [
     },
     {
         title: 'Pow/Pomn sąsiedztwo',
-        type: sizeInterpolation
+        type: sizeNeighborhood
     },
     {
         title: 'Pow/Pomn interpolacja',
-        type: sizeNeighborhood
+        type: sizeInterpolation
     },
 ];

@@ -15,7 +15,7 @@ import { exposure } from "./exposure/exposure";
 import { gamma } from "./gamma/gamma";
 import { negative } from "./negative/negative";
 import { sepia } from "./sepia/sepia";
-// import {sizeInterpolation} from "./sizeInterpolation/sizeInterpolation";
+import { sizeInterpolation } from "./sizeInterpolation/sizeInterpolation";
 import { sizeNeighborhood } from "./sizeNeighborhood/sizeNeighborhood";
 
 export const getImageEffect = (type) => {
@@ -32,8 +32,8 @@ export const getImageEffect = (type) => {
             return negative;
         case sepiaType:
             return sepia;
-        // case sizeInterpolationType:
-        //     return sizeInterpolation;
+        case sizeInterpolationType:
+            return sizeInterpolation;
         case sizeNeighborhoodType:
             return sizeNeighborhood;
         default:

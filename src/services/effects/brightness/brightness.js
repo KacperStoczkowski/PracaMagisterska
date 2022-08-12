@@ -21,5 +21,5 @@ export const brightness = (inputImageCanvas, brightnessValue) => {
         resultImageData.data[i + 3] = 255;
     }
 
-    return resultImageData;
+    return {resultImageData, width, height};
 }

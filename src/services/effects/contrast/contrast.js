@@ -21,5 +21,5 @@ export const contrast = (inputImageCanvas, contrastValue) => {
         resultImageData.data[i + 3] = 255;
     }
     
-    return resultImageData;
+    return {resultImageData, width, height};
 }
